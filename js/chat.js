@@ -1,27 +1,12 @@
 // Initialize global user 
 // (a good idea to store the information you need
 // when sending messages here)
-var CURRENT_USER = 'Steve';
-var myMessage = 'hello world - steve'
+var uid;
 var d;
 
 // sendMessage() sends a message to the API
-function sendMessage(CURRENT_USER, myMessage) {
-        $.ajax({
-            url: 'http://chat-app.brainstation.io/messages',
-            type: 'post',
-            xhrFields: { withCredentials:true },
-            data: {
-                userID: CURRENT_USER,
-                message: myMessage
-            },
-            success: function() {
-                alert('yay!');
-            },
-            error: function() {
-                alert('nope');
-            }
-        });
+function sendMessage() {
+       
     }
     //sendMessage(CURRENT_USER, myMessage);
     // getMessages() gets all messages from the API.
@@ -64,12 +49,27 @@ $('#displayMessages').submit(function() {
 })
 
 //signup(); This signup works and has signed me up already
-
-
+login();
+console.log(uid);
 
 // login() logs in a user by creating a session
 function login() {
-
+	$.ajax({
+		url : 'http://chat-app.brainstation.io/users/login',
+		type: 'POST',
+		xhrFields: { withCredentials:true },
+		data:{
+			username:'Steve',
+			password:'bobbly'
+		},
+		success:function(result){
+			console.log(result);
+			uid=result.uid;
+		},
+		error:function(result){
+			console.log('login error' + result);
+		}
+	})
 }
 
 // signup() creates an account that we can sign in with
