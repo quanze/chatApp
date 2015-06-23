@@ -60,10 +60,10 @@ var htmlize = function(arr) {
 $('#displayMessages').submit(function() {
     $('#messages').html("");
     getMessages();
-
     return false;
 })
 
+//signup(); This signup works and has signed me up already
 
 
 
@@ -75,6 +75,21 @@ function login() {
 // signup() creates an account that we can sign in with
 function signup() {
 
+	$.ajax({
+		url : 'http://chat-app.brainstation.io/users',
+		type: 'POST',
+		xhrFields: { withCredentials:true },
+		data:{
+			username: 'steve',
+			password: 'bobbly'
+		},
+		success:function(result){
+			console.log('success' + result);
+		},
+		error:function(result){
+			console.log("error: " + result.errors);
+		}
+	})
 }
 
 // HELPERS -------
