@@ -16,6 +16,7 @@ ul{
 .messageDisplay{
 	border: 1px solid black;
 	height: 75%;
+		overflow: scroll;
 }
 .inputBox{
 	padding: 3%;

@@ -45,23 +45,26 @@ function getMessages() {
     return d;
 }
 
+var htmlize = function(arr) {
+    var output = "";
+    for(var i = 0; i < arr.length; i++){
+    output += '<li class="text">';
+    output += arr[i].username + ': ' + arr[i].message + '<br>';
+    output += '</li>';
+    console.log('hmtlize')
+    }
+    $('#messages').append(output);
+}
+
+
 $('#displayMessages').submit(function() {
-    console.log('display msg');
+    $('#messages').html("");
     getMessages();
 
     return false;
 })
 
-var htmlize = function(arr) {
-    var output = "";
-    for(var i = 0; i < arr.length; i++){
-    output += '<li class="text">';
-    output += 'User: ' + arr[i].userID + '<br>';
-    output += '</li>';
-    console.log('hmtlize')
-    $('#messages').append(output);
-	}
-}
+
 
 
 // login() logs in a user by creating a session
