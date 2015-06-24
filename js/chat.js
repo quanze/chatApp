@@ -1,16 +1,36 @@
 // Initialize global user 
 // (a good idea to store the information you need
 // when sending messages here)
-var uid;
+var uid = "322824cbada6280c";
+var id = "b332cc36548878065abe5af5b4c5312afadcf60511e53f3f86a4753b9240d640ba880ac5e6303096670b232be9b6e07dccf7eaf435279bcfdf414caf08365f69";
+var isLogin = false;
 var d;
 
 // sendMessage() sends a message to the API
-function sendMessage() {
+function sendMessage(id,uid,message) {
+    $.ajax ({
+        url : 'http://chat-app.brainstation.io/messages',
+        type : 'POST',
+        xhrFields: { withCredentials:true },
+        data: { 'message' : message,
+                'userID': uid,
+                //'timestamp' : getTimeStamp(),
+                //'username': 'Steve',
+                //'id' : id
+                },
+        success: function(data) {
+            console.log(data);
+        },
+        error: function(data){
+            error(data,'noooooo');  
+        }
+
+    })
        
-    }
-    //sendMessage(CURRENT_USER, myMessage);
-    // getMessages() gets all messages from the API.
-    // we can use diff() to get only the new ones.
+}
+//sendMessage(CURRENT_USER, myMessage);
+// getMessages() gets all messages from the API.
+// we can use diff() to get only the new ones.
 function getMessages() {
 
     $.ajax({
@@ -29,7 +49,6 @@ function getMessages() {
     console.log(d);
     return d;
 }
-
 var htmlize = function(arr) {
     var output = "";
     for(var i = 0; i < arr.length; i++){
@@ -40,18 +59,12 @@ var htmlize = function(arr) {
     }
     $('#messages').append(output);
 }
-
-
 $('#displayMessages').submit(function() {
     $('#messages').html("");
     getMessages();
     return false;
 })
-
-//signup(); This signup works and has signed me up already
-login();
-console.log(uid);
-
+//signup(); //This signup works and has signed me up already
 // login() logs in a user by creating a session
 function login() {
 	$.ajax({
@@ -64,15 +77,14 @@ function login() {
 		},
 		success:function(result){
 			console.log(result);
-			uid=result.uid;
+            isLogin = true;
 		},
 		error:function(result){
 			console.log('login error' + result);
 		}
 	})
 }
-
-// signup() creates an account that we can sign in with
+//creates an account that we can sign in with
 function signup() {
 
 	$.ajax({
@@ -80,7 +92,7 @@ function signup() {
 		type: 'POST',
 		xhrFields: { withCredentials:true },
 		data:{
-			username: 'steve',
+			username: 'Steve',
 			password: 'bobbly'
 		},
 		success:function(result){
@@ -91,6 +103,12 @@ function signup() {
 		}
 	})
 }
+
+
+
+login();
+sendMessage(id,uid,"Nevermind I'm happy now");
+
 
 // HELPERS -------
 // You can use these and modify them to fit your needs. 
@@ -115,8 +133,15 @@ function scrollBottom(element, duration) {
     }, duration);
 }
 
+// Gets time stamp
+function getTimeStamp(){
+    var date = new Date();
+    var time = date.getTime();
+    return time;
+}
+
 // Helper - turns JavaScript timestamp into something useful
-function getReadableTime(stamp) {
+function getReadableTime(getTimeStamp) {
     var time = new Date()
     time.setTime(stamp)
     return time.getMonth() + "/" + time.getDate() + " " + pad(time.getHours(), 2) + ":" + pad(time.getMinutes(), 2);
