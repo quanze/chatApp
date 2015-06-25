@@ -39,8 +39,7 @@ function getMessages() {
         	htmlize(diff(data,storedMsg));
             if(data != storedMsg){
                 storedMsg = data;
-                scrollBottom($('.messageDisplay'),300);
-
+                //scrollBottom($('.messageDisplay'),300);
             };
             console.log('get msg success');         
         },
